@@ -14,11 +14,9 @@ function ChatList({ navigation }) {
         const snapshot = await axios.get(`http://whatsapp-reactp.herokuapp.com/getChats/${name}`)
         if (snapshot.data.length != 0) {
             setlist(snapshot.data[0].convos)
-            return 0;
         } else {
             var arr = ["U need friends"]
             setlist(arr)
-            return 0;
         }
     }
     const checkUser = async () => {
@@ -54,6 +52,7 @@ function ChatList({ navigation }) {
     }
     const user = checkUser();
     // useEffect(() => {
+    //     console.log('called')
     // }, [])
     return (
         <View style={styles.container}>
@@ -71,7 +70,7 @@ function ChatList({ navigation }) {
             <View style={styles.chatList}>
                 <ScrollView style={{ height: '90%' }}>
                     {list && list.map(item => (
-                        <TouchableOpacity onPress={() => navigation.navigate('MsgScreen')}>
+                        <TouchableOpacity key={list.indexOf(`${item}`)} onPress={() => navigation.navigate('MsgScreen', { user: item })}>
                             <View style={styles.listMember}><UserAvatar size={45} name={`${item}`} />
                                 <Text style={styles.listText}>{item}</Text>
                             </View>
