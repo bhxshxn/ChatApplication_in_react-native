@@ -1,12 +1,26 @@
 import React,{useState,useEffect} from 'react';
 import {View,Text,TextInput,StyleSheet, TouchableOpacity, Button} from 'react-native';
+import axios from 'axios';
 
 
 function Register({navigation}) {
     const [username, setusername] = useState("")
     const [password, setpassword] = useState("")
-    const register=()=>{
-
+    const [email, setemail] = useState("")
+    const register=async()=>{
+        try{
+           await axios.post('http://whatsapp-reactp.herokuapp.com/register',{username,password,email}).then(response=>{
+            if(response.data){
+                alert('Sucessfully Registered')
+                navigation.navigate('Login')
+            }
+           }).catch(err=>{
+               alert('Failed to Register')
+               console.log(err)})
+        }catch(err){
+            alert('Failed to Register')
+            console.log(err)
+        }
     }
     return (
         <View style={styles.conatiner}>
@@ -19,14 +33,23 @@ function Register({navigation}) {
                 onChangeText={setusername}
                 style={styles.input}
                 placeholderTextColor="#000" 
-                >
-                </TextInput>
+                ></TextInput>
+
+                <TextInput
+                placeholder='Email'
+                value={email}
+                onChangeText={setemail}
+                style={styles.input}
+                placeholderTextColor="#000" 
+                ></TextInput>
+                
                 <TextInput
                 placeholder='Password'
                 value={password}
                 onChangeText={setpassword}
                 style={styles.input}
                 placeholderTextColor="#000" 
+                secureTextEntry={true}
                 >
                 </TextInput>
             </View>
