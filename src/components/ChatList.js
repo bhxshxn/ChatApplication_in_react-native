@@ -70,7 +70,7 @@ function ChatList({ navigation }) {
             <View style={styles.chatList}>
                 <ScrollView style={{ height: '90%' }}>
                     {list && list.map(item => (
-                        <TouchableOpacity key={list.indexOf(`${item}`)} onPress={() => navigation.navigate('MsgScreen', { user: item })}>
+                        <TouchableOpacity key={list.indexOf(`${item}`)} onPress={() => navigation.navigate('MsgScreen', { to: item, from: name })}>
                             <View style={styles.listMember}><UserAvatar size={45} name={`${item}`} />
                                 <Text style={styles.listText}>{item}</Text>
                             </View>
